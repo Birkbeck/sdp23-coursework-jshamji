@@ -23,14 +23,26 @@ public class SubInstruction extends Instruction {
         this.source = source;
     }
 
+    /**
+            * Execute the subtraction instruction, in turn modifying the registers.
+            *
+            * @param m the machine under which the instruction executes
+     */
+
     @Override
-    public int execute(Machine machine) {
-        int value1 = machine.getRegisters().get(result);
-        int value2 = machine.getRegisters().get(source);
-        machine.getRegisters().set(result, value1 - value2);
+    public int execute(Machine m) {
+        int value1 = m.getRegisters().get(result);
+        int value2 = m.getRegisters().get(source);
+        m.getRegisters().set(result, value1 - value2);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
 
+
+    /**
+     * String description of the instruction
+     *
+     * @return representation of label, opcode and the values in the two registers
+     */
     @Override
     public String toString() {
         return getLabelString() + getOpcode() + " " + result + " " + source;

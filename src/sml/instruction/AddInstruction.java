@@ -22,6 +22,12 @@ public class AddInstruction extends Instruction {
 		this.source = source;
 	}
 
+
+	/**
+	 * Execute the addition instruction, in turn modifying the registers.
+	 *
+	 * @param m the machine under which the instruction executes
+	 */
 	@Override
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);
@@ -30,6 +36,11 @@ public class AddInstruction extends Instruction {
 		return NORMAL_PROGRAM_COUNTER_UPDATE;
 	}
 
+	/**
+	 * String description of the instruction
+	 *
+	 * @return representation of label, opcode and the values in the two registers
+	 */
 	@Override
 	public String toString() {
 		return getLabelString() + getOpcode() + " " + result + " " + source;
