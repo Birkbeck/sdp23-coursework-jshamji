@@ -4,13 +4,13 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
+// TODO: write a JavaDoc for the class
+
+/**
+ * @author
+ */
+
 public class MulInstruction extends Instruction {
-
-    // TODO: write a JavaDoc for the class
-
-    /**
-     * @author
-     */
 
     private final RegisterName result;
     private final RegisterName source;
@@ -46,5 +46,15 @@ public class MulInstruction extends Instruction {
     @Override
     public String toString() {
         return getLabelString() + getOpcode() + " " + result + " " + source;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

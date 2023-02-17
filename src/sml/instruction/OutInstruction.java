@@ -10,35 +10,39 @@ import sml.RegisterName;
  * @author
  */
 
-public class MovInstruction extends Instruction {
+public class OutInstruction extends Instruction {
 
     private final RegisterName result;
 
-    private final int value;
+    public static final String OP_CODE = "out";
 
-    public static final String OP_CODE = "mov";
 
-    public MovInstruction(String label, RegisterName result, int value) {
+    public OutInstruction(String label, RegisterName result) {
         super(label, OP_CODE);
         this.result = result;
-        this.value = value;
     }
 
+
     /**
-     * Execute the move instruction, in turn modifying the register.
+     * Execute the addition instruction, in turn modifying the registers.
      *
      * @param m the machine under which the instruction executes
      */
-
     @Override
     public int execute(Machine m) {
-        m.getRegisters().set(result, value);
+        System.out.println("The value is " + m.getRegisters().get(result));
         return NORMAL_PROGRAM_COUNTER_UPDATE;
+
     }
 
+    /**
+     * String description of the instruction
+     *
+     * @return representation of label, opcode and the values in the two registers
+     */
     @Override
     public String toString() {
-        return getLabelString() + getOpcode() + " " + result + " " + value;
+        return getLabelString() + getOpcode() + " " + result;
     }
 
     @Override
