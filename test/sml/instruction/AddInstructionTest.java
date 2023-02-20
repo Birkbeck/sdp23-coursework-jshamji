@@ -45,4 +45,58 @@ class AddInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(1, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void equalsTrueOne() {
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    Instruction instructionOne = new AddInstruction(null, EAX, EBX);
+    Instruction instructionTwo = new AddInstruction(null, EAX, EBX);
+    Assertions.assertTrue(instructionOne.equals(instructionTwo));
+  }
+
+  @Test
+  void equalsTrueTwo() {
+    registers.set(EBP, 10);
+    registers.set(EDI, 4);
+    Instruction instructionOne = new AddInstruction("add1", EBP, EDI);
+    Instruction instructionTwo = new AddInstruction("add1", EBP, EDI);
+    Assertions.assertTrue(instructionOne.equals(instructionTwo));
+  }
+
+  @Test
+  void equalsFalseOne() {
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    registers.set(ECX, 9);
+    Instruction instructionOne = new AddInstruction(null, EAX, EBX);
+    Instruction instructionTwo = new AddInstruction(null, EAX, ECX);
+    Assertions.assertFalse(instructionOne.equals(instructionTwo));
+  }
+
+  @Test
+  void hashTrueOne() {
+    registers.set(EDX, 6);
+    registers.set(ECX, 9);
+    Instruction instructionOne = new AddInstruction(null, EDX, ECX);
+    Instruction instructionTwo = new AddInstruction(null, EDX, ECX);
+    int hashInstructionOne = instructionOne.hashCode();
+    int hashInstructionTwo = instructionTwo.hashCode();
+    Assertions.assertTrue(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
+  }
+
+  @Test
+  void hashFalseOne() {
+    registers.set(EDX, 6);
+    registers.set(ECX, 9);
+    registers.set(EAX, -234);
+    Instruction instructionOne = new AddInstruction(null, EDX, ECX);
+    Instruction instructionTwo = new AddInstruction(null, EDX, EAX);
+    int hashInstructionOne = instructionOne.hashCode();
+    int hashInstructionTwo = instructionTwo.hashCode();
+    Assertions.assertFalse(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
+  }
+
+
+
 }

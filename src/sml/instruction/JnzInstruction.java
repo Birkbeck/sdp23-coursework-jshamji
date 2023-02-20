@@ -6,6 +6,7 @@ import sml.Machine;
 import sml.RegisterName;
 
 import java.util.Map;
+import java.util.Objects;
 
 // TODO: write a JavaDoc for the class
 
@@ -58,11 +59,23 @@ public class JnzInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
-        return false;
+        if (this == o) return true;
+
+        if (!(o instanceof JnzInstruction)) return false;
+
+        JnzInstruction that = (JnzInstruction) o;
+
+        if (!result.equals(that.result)) return false;
+        if (!executeLabel.equals(that.executeLabel)) return false;
+
+        if (getLabelString() != null ? !getLabelString().equals(that.getLabelString()) : that.getLabelString() != null)
+            return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(result, executeLabel, label);
     }
 }

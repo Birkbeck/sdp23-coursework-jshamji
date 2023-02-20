@@ -39,7 +39,7 @@ public class SubInstructionTest {
     }
 
     @Test
-    void executeValid2() {
+    void executeValidTwo() {
         registers.set(EDI, -5);
         registers.set(ECX, -23);
         Instruction instruction = new SubInstruction(null, EDI, ECX);
@@ -48,12 +48,74 @@ public class SubInstructionTest {
     }
 
     @Test
-    void executeValid3() {
+    void executeValidThree() {
         registers.set(EDI, -20);
         registers.set(ECX, 23);
         Instruction instruction = new SubInstruction(null, EDI, ECX);
         instruction.execute(machine);
         Assertions.assertEquals(-43, machine.getRegisters().get(EDI));
+    }
+
+    @Test
+    void equalsTrueOne() {
+        registers.set(EAX, 23);
+        registers.set(EBX, 99);
+        Instruction instructionOne = new SubInstruction(null, EAX, EBX);
+        Instruction instructionTwo = new SubInstruction(null, EAX, EBX);
+        Assertions.assertTrue(instructionOne.equals(instructionTwo));
+    }
+
+    @Test
+    void equalsFalseOne() {
+        registers.set(EBP, 23);
+        registers.set(EBX, -2);
+        registers.set(ECX, 88);
+        Instruction instructionOne = new SubInstruction(null, EBP, EBX);
+        Instruction instructionTwo = new SubInstruction(null, EBP, ECX);
+        Assertions.assertFalse(instructionOne.equals(instructionTwo));
+    }
+
+    @Test
+    void equalsFalseTwo() {
+        registers.set(EBX, -2);
+        registers.set(ECX, 88);
+        Instruction instructionOne = new SubInstruction("sub1", EBX, ECX);
+        Instruction instructionTwo = new SubInstruction(null, EBX, ECX);
+        Assertions.assertFalse(instructionOne.equals(instructionTwo));
+    }
+
+    @Test
+    void hashTrueOne() {
+        registers.set(EAX, 322);
+        registers.set(ESI, 23);
+        Instruction instructionOne = new SubInstruction("sub1", EAX, ESI);
+        Instruction instructionTwo = new SubInstruction("sub1", EAX, ESI);
+        int hashInstructionOne = instructionOne.hashCode();
+        int hashInstructionTwo = instructionTwo.hashCode();
+        Assertions.assertTrue(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
+    }
+
+    @Test
+    void hashFalseOne() {
+        registers.set(EDI, 78);
+        registers.set(ECX, 93);
+        registers.set(EAX, -234);
+        Instruction instructionOne = new SubInstruction(null, EDI, ECX);
+        Instruction instructionTwo = new SubInstruction(null, EDI, EAX);
+        int hashInstructionOne = instructionOne.hashCode();
+        int hashInstructionTwo = instructionTwo.hashCode();
+        Assertions.assertFalse(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
+    }
+
+    @Test
+    void hashFalseTwo() {
+        registers.set(ESP, 2);
+        registers.set(ESI, 40);
+        Instruction instructionOne = new SubInstruction("sub1", ESP, ESI);
+        Instruction instructionTwo = new SubInstruction("sub2", ESP, ESI);
+        int hashInstructionOne = instructionOne.hashCode();
+        int hashInstructionTwo = instructionTwo.hashCode();
+        Assertions.assertFalse(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
     }
 
 }
