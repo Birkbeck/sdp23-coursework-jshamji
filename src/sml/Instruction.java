@@ -6,8 +6,10 @@ import java.util.Objects;
 
 /**
  * Represents an abstract instruction.
+ * <p> </p>
+ * The class is extended by Instruction subclasses that are represented in SML files.
  *
- * @author ...
+ * @author Jay Shamji
  */
 public abstract class Instruction {
 	protected final String label;
@@ -52,6 +54,9 @@ public abstract class Instruction {
 
 	// TODO: What does abstract in the declaration below mean?
 	//       (Write a short explanation.)
+
+	// abstract means that subclasses of the Instruction class
+	// must lay out its own implementation of the abstract method
 	@Override
 	public abstract String toString();
 
