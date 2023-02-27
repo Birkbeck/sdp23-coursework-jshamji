@@ -6,8 +6,12 @@ import java.util.stream.Collectors;
 // TODO: write a JavaDoc for the class
 
 /**
+ * This class represents the Registers that the instructions manipulate
  *
- * @author ...
+ * Eight registers possible to use, having methods for setting and getting the values of registers.
+ * as well as methods for clearing the register values and checking for equality.
+ *
+ * @author Jay Shamji
  */
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
