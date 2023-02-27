@@ -3,12 +3,13 @@ package sml;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 // TODO: write a JavaDoc for the class
 
 /**
- *
- * @author ...
+ * This class represents the labels that are associated to the addresses.
+ * @author Jay Shamji
  */
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();
@@ -22,6 +23,9 @@ public final class Labels {
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
+		if (labels.containsKey(label))
+			throw new IllegalArgumentException("This label already exists: " + label);
+
 		labels.put(label, address);
 	}
 
@@ -35,6 +39,11 @@ public final class Labels {
 		// TODO: Where can NullPointerException be thrown here?
 		//       (Write an explanation.)
 		//       Add code to deal with non-existent labels.
+
+		// The NullPointerException is thrown when either the label is null or the label doesn't exist in the map.
+		if (label == null || !labels.containsKey(label))
+			throw new NullPointerException("This label does not exist: " +label );
+
 		return labels.get(label);
 	}
 
@@ -47,10 +56,28 @@ public final class Labels {
 	@Override
 	public String toString() {
 		// TODO: Implement the method using the Stream API (see also class Registers).
-		return "";
+		return labels.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey())
+				.map(e -> e.getKey() + " -> " + e.getValue())
+				.collect(Collectors.joining(", ", "[","]"));
 	}
 
 	// TODO: Implement equals and hashCode (needed in class Machine).
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Labels) {
+			Labels other = (Labels) o;
+			return labels.equals(other.labels);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return labels.hashCode();
+	}
 
 	/**
 	 * Removes the labels
