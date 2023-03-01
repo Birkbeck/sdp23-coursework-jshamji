@@ -79,6 +79,8 @@ public final class Translator {
         String instructionClassName = Character.toUpperCase(opcode.charAt(0)) + opcode.substring(1) + "Instruction";
         Class<?> instructionClass = Class.forName("sml.instruction."+instructionClassName);
 
+
+//        Initialising the instruction constructor
         instructionClass.getEnclosingConstructor();
         Constructor<?> instructionConstructor = switch (instructionClassName) {
             case "MovInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class, int.class);
@@ -90,6 +92,7 @@ public final class Translator {
         String r = scan();
         Object s;
 
+//        checks what the last element of the line is by checking what instruction is active
         if (instructionClass.getSimpleName().equals("MovInstruction")) {
             s = Integer.parseInt(line.trim());
         } else if (instructionClass.getSimpleName().equals("JnzInstruction")) {
@@ -102,6 +105,7 @@ public final class Translator {
             }
         }
 
+//        creates the instance of the instruction
         try {
             if (instructionClass.getSimpleName().equals("OutInstruction")) {
                 return (Instruction) instructionConstructor.newInstance(label, Registers.Register.valueOf(r));
