@@ -3,7 +3,6 @@ package sml;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO: write a JavaDoc for the class
 
 /**
  * This class represents the Registers that the instructions manipulate
@@ -49,12 +48,10 @@ public final class Registers {
         return registers.get((Register)register);
     }
 
-    // TODO: use pattern matching for instanceof
-    // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
+
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Registers) {
-            Registers other = (Registers) o;
+        if (o instanceof Registers other) {
             return registers.equals(other.registers);
         }
         return false;
