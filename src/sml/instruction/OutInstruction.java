@@ -33,7 +33,7 @@ public class OutInstruction extends Instruction {
      */
     @Override
     public int execute(Machine m) {
-        System.out.println("The value is " + m.getRegisters().get(result));
+        System.out.println("The value of register " + result + " is " + m.getRegisters().get(result));
         return NORMAL_PROGRAM_COUNTER_UPDATE;
 
     }
