@@ -29,8 +29,7 @@ public class ProgramTest {
         String[] args = {"test/test1.sml"};
         Main.main(args);
     }
-
-    //    Moving 20 to every Register, then changing ESP to contain 5
+//    Unknown instruction for first two lines, then moving 20 to every register, then changing ESP to contain 5
     @Test
     void runProgramTwo() {
         String[] args = {"test/test2.sml"};
