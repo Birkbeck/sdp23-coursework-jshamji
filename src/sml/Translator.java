@@ -4,18 +4,19 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import static sml.Registers.Register;
-
 /**
- * This class ....
+ * This class turns <b>S</b><b>M</b>al<b>L</b> file into the appropriate labels and instructions.
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author Jay Shamji
  */
 public final class Translator {
 
@@ -49,6 +50,8 @@ public final class Translator {
                     program.add(instruction);
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -61,60 +64,53 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label) {
-        if (line.isEmpty())
-            return null;
+    private Instruction getInstruction(String label) throws Exception {
+
+        // TODO: Next, use dependency injection to allow this machine class
+
 
         String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case DivInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case MulInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case  SubInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case MovInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MovInstruction(label, Register.valueOf(r), Integer.parseInt(s));
-            }
-            case OutInstruction.OP_CODE -> {
-                String r = scan();
-                return new OutInstruction(label, Register.valueOf(r));
-            }
-            case JnzInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
 
-                return new JnzInstruction(label, Register.valueOf(r), s);
-            }
+        if (line.isEmpty() || line.isBlank()) {
+            System.out.println("Unknown instruction: " + opcode);
+            return null;
+        }
 
-            // TODO: add code for all other types of instructions
+        String instructionClassName = Character.toUpperCase(opcode.charAt(0)) + opcode.substring(1) + "Instruction";
+        Class<?> instructionClass = Class.forName("sml.instruction."+instructionClassName);
 
-            // TODO: Then, replace the switch by using the Reflection API
+        instructionClass.getEnclosingConstructor();
+        Constructor<?> instructionConstructor = switch (instructionClassName) {
+            case "MovInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class, int.class);
+            case "JnzInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class, String.class);
+            case "OutInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class);
+            default -> instructionClass.getConstructor(String.class, RegisterName.class, RegisterName.class);
+        };
 
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
+        String r = scan();
+        Object s;
 
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
+        if (instructionClass.getSimpleName().equals("MovInstruction")) {
+            s = Integer.parseInt(line.trim());
+        } else if (instructionClass.getSimpleName().equals("JnzInstruction")) {
+            s = line.trim();
+        } else {
+            try {
+                s = Registers.Register.valueOf(line.trim());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Illegal register name: " + e.getMessage());
             }
         }
-        return null;
+
+        try {
+            if (instructionClass.getSimpleName().equals("OutInstruction")) {
+                return (Instruction) instructionConstructor.newInstance(label, Registers.Register.valueOf(r));
+            } else {
+                return (Instruction) instructionConstructor.newInstance(label, Registers.Register.valueOf(r), s);
+            }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException("Error creating instruction: " + e.getMessage());
+        }
     }
 
 
