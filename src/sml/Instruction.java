@@ -1,13 +1,12 @@
 package sml;
 
-// TODO: write a JavaDoc for the class
 
 import java.util.Objects;
 
 /**
  * Represents an abstract instruction.
  * <p> </p>
- * The class is extended by Instruction subclasses that are represented in SML files.
+ * The class is extended by concrete Instruction subclasses that are represented in SML files.
  *
  * @author Jay Shamji
  */
@@ -52,15 +51,12 @@ public abstract class Instruction {
 		return (getLabel() == null) ? "" : getLabel() + ": ";
 	}
 
-	// TODO: What does abstract in the declaration below mean?
-	//       (Write a short explanation.)
 
-	// abstract means that subclasses of the Instruction class
+	// the abstract below means that the concrete subclasses of the Instruction class
 	// must lay out its own implementation of the abstract method
+
 	@Override
 	public abstract String toString();
-
-	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
 
 	public abstract boolean equals(Object o);
 	public abstract int hashCode();
