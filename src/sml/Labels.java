@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// TODO: write a JavaDoc for the class
 
 /**
  * This class represents the labels that are associated to the addresses.
@@ -22,7 +21,7 @@ public final class Labels {
 	 */
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
-		// TODO: Add a check that there are no label duplicates.
+
 		if (labels.containsKey(label))
 			throw new IllegalArgumentException("This label already exists: " + label);
 
@@ -36,11 +35,8 @@ public final class Labels {
 	 * @return the address the label refers to
 	 */
 	public int getAddress(String label) {
-		// TODO: Where can NullPointerException be thrown here?
-		//       (Write an explanation.)
-		//       Add code to deal with non-existent labels.
-
 		// The NullPointerException is thrown when either the label is null or the label doesn't exist in the map.
+
 		if (label == null || !labels.containsKey(label))
 			throw new NullPointerException("This label does not exist: " +label );
 
@@ -55,20 +51,16 @@ public final class Labels {
 	 */
 	@Override
 	public String toString() {
-		// TODO: Implement the method using the Stream API (see also class Registers).
 		return labels.entrySet().stream()
 				.sorted(Map.Entry.comparingByKey())
 				.map(e -> e.getKey() + " -> " + e.getValue())
 				.collect(Collectors.joining(", ", "[","]"));
 	}
 
-	// TODO: Implement equals and hashCode (needed in class Machine).
-
 
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Labels) {
-			Labels other = (Labels) o;
+		if (o instanceof Labels other) {
 			return labels.equals(other.labels);
 		}
 		return false;
