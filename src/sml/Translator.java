@@ -1,11 +1,9 @@
 package sml;
 
-import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -65,10 +63,6 @@ public final class Translator {
      * with its label already removed.
      */
     private Instruction getInstruction(String label) throws Exception {
-
-        // TODO: Next, use dependency injection to allow this machine class
-
-
         String opcode = scan();
 
         if (line.isEmpty() || line.isBlank()) {
@@ -76,45 +70,12 @@ public final class Translator {
             return null;
         }
 
-        String instructionClassName = Character.toUpperCase(opcode.charAt(0)) + opcode.substring(1) + "Instruction";
-        Class<?> instructionClass = Class.forName("sml.instruction."+instructionClassName);
-
-
-//        Initialising the instruction constructor
-        instructionClass.getEnclosingConstructor();
-        Constructor<?> instructionConstructor = switch (instructionClassName) {
-            case "MovInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class, int.class);
-            case "JnzInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class, String.class);
-            case "OutInstruction" -> instructionClass.getConstructor(String.class, RegisterName.class);
-            default -> instructionClass.getConstructor(String.class, RegisterName.class, RegisterName.class);
-        };
+        HashMap<Class<?>, String> classStringHashMap = InstructionFactory.createClass(opcode);
+        HashMap<Class<?>, Constructor<?>> classConstructorHashMap = InstructionFactory.createConstructor(classStringHashMap);
 
         String r = scan();
-        Object s;
 
-//        checks what the last element of the line is by checking what instruction is active
-        if (instructionClass.getSimpleName().equals("MovInstruction")) {
-            s = Integer.parseInt(line.trim());
-        } else if (instructionClass.getSimpleName().equals("JnzInstruction")) {
-            s = line.trim();
-        } else {
-            try {
-                s = Registers.Register.valueOf(line.trim());
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Illegal register name: " + e.getMessage());
-            }
-        }
-
-//        creates the instance of the instruction
-        try {
-            if (instructionClass.getSimpleName().equals("OutInstruction")) {
-                return (Instruction) instructionConstructor.newInstance(label, Registers.Register.valueOf(r));
-            } else {
-                return (Instruction) instructionConstructor.newInstance(label, Registers.Register.valueOf(r), s);
-            }
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException("Error creating instruction: " + e.getMessage());
-        }
+        return InstructionFactory.createInstruction(classConstructorHashMap, r, label, line);
     }
 
 
