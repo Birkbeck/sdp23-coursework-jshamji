@@ -9,7 +9,11 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents the instruction subtracts the content of source register from result register.
+ *
+ * Content stored in result register.
+ *
+ * @author Jay Shamji
  */
 
 public class SubInstruction extends Instruction {
@@ -54,9 +58,7 @@ public class SubInstruction extends Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof SubInstruction)) return false;
-
-        SubInstruction that = (SubInstruction) o;
+        if (!(o instanceof SubInstruction that)) return false;
 
         if (!result.equals(that.result)) return false;
         if (!source.equals(that.source)) return false;

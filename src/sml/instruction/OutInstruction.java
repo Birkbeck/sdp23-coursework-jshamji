@@ -6,10 +6,11 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents the instruction that prints out the value of result register
+ *
+ * @author Jay Shamji
  */
 
 public class OutInstruction extends Instruction {
@@ -51,9 +52,7 @@ public class OutInstruction extends Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof OutInstruction)) return false;
-
-        OutInstruction that = (OutInstruction) o;
+        if (!(o instanceof OutInstruction that)) return false;
 
         if (!result.equals(that.result)) return false;
 

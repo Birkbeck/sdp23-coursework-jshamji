@@ -6,10 +6,13 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents instruction that divides the contents from result register by the contents from result register.
+ *
+ * Content stored in result register.
+ *
+ * @author Jay Shamji
  */
 
 public class DivInstruction extends Instruction {
@@ -54,9 +57,7 @@ public class DivInstruction extends Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof DivInstruction)) return false;
-
-        DivInstruction that = (DivInstruction) o;
+        if (!(o instanceof DivInstruction that)) return false;
 
         if (!result.equals(that.result)) return false;
         if (!source.equals(that.source)) return false;

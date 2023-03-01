@@ -3,13 +3,19 @@ package sml.instruction;
 import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
+import sml.Registers;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents instruction that adds the contents from source register to the result register.
+ *
+ * Content stored in result register.
+ *
+ * @author Jay Shamji
  */
 
 public class AddInstruction extends Instruction {
@@ -52,9 +58,7 @@ public class AddInstruction extends Instruction {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 
-		if (!(o instanceof AddInstruction)) return false;
-
-		AddInstruction that = (AddInstruction) o;
+		if (!(o instanceof AddInstruction that)) return false;
 
 		if (!result.equals(that.result)) return false;
 		if (!source.equals(that.source)) return false;

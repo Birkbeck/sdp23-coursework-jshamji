@@ -6,10 +6,13 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents the instruction that multiplies the contents of result register to contents of source register.
+ *
+ * Content stored in result register.
+ *
+ * @author Jay Shamji
  */
 
 public class MulInstruction extends Instruction {
@@ -54,9 +57,7 @@ public class MulInstruction extends Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof MulInstruction)) return false;
-
-        MulInstruction that = (MulInstruction) o;
+        if (!(o instanceof MulInstruction that)) return false;
 
         if (!result.equals(that.result)) return false;
         if (!source.equals(that.source)) return false;

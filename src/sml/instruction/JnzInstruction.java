@@ -8,10 +8,11 @@ import sml.RegisterName;
 import java.util.Map;
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents the instruction that makes the address in the label to be executed next if register not zero.
+ *
+ * @author Jay Shamji
  */
 public class JnzInstruction extends Instruction {
 

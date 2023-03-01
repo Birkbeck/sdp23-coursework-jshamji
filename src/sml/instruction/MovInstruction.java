@@ -6,10 +6,12 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+
 
 /**
- * @author
+ * Moves the integer value to the result register. Replacing the old content in register.
+ *
+ * @author Jay Shamji
  */
 
 public class MovInstruction extends Instruction {
@@ -47,23 +49,11 @@ public class MovInstruction extends Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof MovInstruction)) return false;
-
-        MovInstruction that = (MovInstruction) o;
+        if (!(o instanceof MovInstruction that)) return false;
 
         if (!result.equals(that.result)) return false;
         if (!Integer.valueOf(value).equals(that.value)) return false;
 
-//        if (getLabelString() != null) {
-//            if (!getLabelString().equals(that.getLabelString())) {
-//                return false;
-//            }
-//        }
-//        else if (that.getLabelString() != null)
-//            return false;
-
-
-//        if (!label.equals(that.label)) return false;
 
         return true;
     }
