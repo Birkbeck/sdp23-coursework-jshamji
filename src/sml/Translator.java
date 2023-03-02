@@ -70,8 +70,9 @@ public final class Translator {
             return null;
         }
 
-        HashMap<Class<?>, String> classStringHashMap = InstructionFactory.createClass(opcode);
-        HashMap<Class<?>, Constructor<?>> classConstructorHashMap = InstructionFactory.createConstructor(classStringHashMap);
+        HashMap<Class<?>, String> classStringHashMap = InstructionFactory.createClassHashmapWithString(opcode);
+        HashMap<Class<?>, Constructor<?>> classConstructorHashMap = InstructionFactory.
+                createClassHashmapWithConstructor(classStringHashMap);
 
         String r = scan();
 
