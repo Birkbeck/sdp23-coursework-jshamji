@@ -1,27 +1,8 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
-import sml.Machine;
 import sml.Main;
-import sml.Registers;
 
 public class ProgramTest {
-
-    private Machine machine;
-    private Registers registers;
-
-    @BeforeEach
-    void setUp() {
-        machine = new Machine(new Registers());
-        registers = machine.getRegisters();
-        //...
-    }
-
-    @AfterEach
-    void tearDown() {
-        machine = null;
-        registers = null;
-    }
 
 //    Move -88 to register EDI
     @Test
@@ -36,7 +17,7 @@ public class ProgramTest {
         Main.main(args);
     }
 
-    //    Factorial of 6 in register EBX
+//    Factorial of 6 in register EBX
     @Test
     void runProgramThree() {
         String[] args = {"test/test3.sml"};
