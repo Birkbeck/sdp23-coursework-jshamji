@@ -20,7 +20,7 @@ public class InstructionFactory {
      * <p>
      *
      */
-    public static HashMap<Class<?>, String> createClass(String opcode){
+    public static HashMap<Class<?>, String> createClassHashmapWithString(String opcode){
         String instructionClassName = Character.toUpperCase(opcode.charAt(0)) + opcode.substring(1) + "Instruction";
 
         try {
@@ -44,7 +44,8 @@ public class InstructionFactory {
      * <p>
      *
      */
-    public static HashMap<Class<?>, Constructor<?>> createConstructor(HashMap<Class<?>, String> classStringHashMap) throws NoSuchMethodException {
+    public static HashMap<Class<?>, Constructor<?>> createClassHashmapWithConstructor(HashMap<Class<?>, String> classStringHashMap)
+            throws NoSuchMethodException {
 
         StringBuilder instructionNameBuilder = new StringBuilder();
 
@@ -79,7 +80,7 @@ public class InstructionFactory {
      *
      * @param instructionClass the Instruction class
      * @param instructionConstructor the Instruction constructor
-     * @param s the object that is the last element of SML line
+     * @param s the object that is the last word of instruction line
      * @param r the result register
      * @param label the label associated to the address
      * @return The new instruction
@@ -105,7 +106,7 @@ public class InstructionFactory {
      * @param classConstructorHashMap containing Instruction class and it's constructor as value
      * @param r the result register
      * @param label the label associated to the address
-     * @param line last object of the instruction line
+     * @param line last word of the instruction line
      * @return The new instruction
      *
      */
@@ -142,4 +143,6 @@ public class InstructionFactory {
 //        Creates the instance of the instruction
         return getInstructionInstance(instructionClass, instructionConstructor, label, r, s);
     }
+
+
 }
