@@ -9,7 +9,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static sml.Registers.Register.*;
 
@@ -24,7 +23,6 @@ public class InstructionFactoryTest {
         machine = new Machine(new Registers());
         registers = machine.getRegisters();
         labels = new Labels();
-        //...
     }
 
     @AfterEach

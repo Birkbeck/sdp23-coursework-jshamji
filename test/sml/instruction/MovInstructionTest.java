@@ -20,7 +20,6 @@ public class MovInstructionTest {
     void setUp() {
         machine = new Machine(new Registers());
         registers = machine.getRegisters();
-        //...
     }
 
     @AfterEach

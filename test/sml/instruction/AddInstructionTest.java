@@ -97,6 +97,4 @@ class AddInstructionTest {
     Assertions.assertFalse(Integer.valueOf(hashInstructionOne).equals(hashInstructionTwo));
   }
 
-
-
 }
